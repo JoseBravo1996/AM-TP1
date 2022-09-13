@@ -1,11 +1,4 @@
-:root {
-  --colorPrincipal: #080f28;
-  --colorSecundario: #141a32;
-  --colorHover: #007aff;
-  --colorBorder: #4f6b95;
-  --colorWhite: #fff;
-  --colorYellow: #ff9d00;
-}
+@import url(base.css);
 
 body {
   margin: 0;
