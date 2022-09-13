@@ -1,13 +1,15 @@
 :root {
   --colorPrincipal: #080f28;
-  --colorSecundario: #080f28;
-  --colorPrincialLight: #6b8cae;
+  --colorSecundario: #141a32;
   --colorHover: #007aff;
+  --colorBorder: #4f6b95;
+  --colorWhite: #fff;
+  --colorYellow: #ff9d00;
 }
 
 body {
   margin: 0;
-  color: #fff;
+  color: var(--colorWhite);
   background-color: var(--colorPrincipal);
   font-family: "Roboto Slab", serif;
   font-size: 1em;
@@ -30,15 +32,18 @@ h1 {
 
 .container > * {
   padding: 20px;
-  /* border: 1px solid; */
   overflow-y: auto;
   background-color: var(--colorPrincipal);
 }
 
+/* AREAS */
+
 .header {
   grid-area: header;
-  background-color: #141a32;
-  border-bottom: 1px solid #4f6b95;
+  background-color: var(--colorSecundario);
+  border-bottom: 1px solid var(--colorBorder);
+  display: contents;
+  text-align: center;
 }
 
 .content {
@@ -47,15 +52,16 @@ h1 {
 
 .navbar {
   grid-area: navbar;
-  background-color: #141a32;
+  background-color: var(--colorSecundario);
 }
 
 .footer {
   grid-area: footer;
   padding: 10px !important;
-  background-color: #141a32;
-  border-top: 1px solid #4f6b95;
+  background-color: var(--colorSecundario);
+  border-top: 1px solid var(--colorBorder);
 }
+
 
 .container {
   display: grid;
@@ -73,6 +79,11 @@ h1 {
 }
 
 /* CARDS */
+
+article {
+  padding-bottom: 20px;
+}
+
 .cards {
   margin: 0 auto;
   max-width: 1000px;
@@ -84,7 +95,7 @@ h1 {
 
 .card {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  border: 2px solid #cccccc;
+  border: 2px solid var(--colorWhite);
 }
 
 .card__image {
@@ -114,7 +125,7 @@ h1 {
   align-items: center;
   background: var(--colorPrincipal);
   font-size: 0.8em;
-  border-top: 2px solid #cccccc;
+  border-top: 2px solid var(--colorWhite);
 }
 
 .card__info i {
@@ -123,7 +134,7 @@ h1 {
 }
 
 .card__link {
-  color: #64968c;
+  color: var(--colorYellow);;
   text-decoration: none;
 }
 
@@ -142,24 +153,19 @@ footer .copy {
   padding-top: 10px;
   display: flex;
   justify-content: center;
-  color: #fff;
+  color: var(--colorWhite);
   text-size-adjust: auto;
 }
 
 .redes-sociales i {
   font-size: 15px;
   padding: 0 20px;
-  color: #fff;
+  color: var(--colorWhite);
 }
 
 .redes-sociales i:hover {
   color: var(--colorHover);
 }
-
-article{
-    padding-bottom: 20px;
-}
-
 
 /* LISTA */
 
@@ -175,14 +181,16 @@ ul li a:hover {
 
 /* SCROLL */
 
-main::-webkit-scrollbar{
+main::-webkit-scrollbar {
   width: 7px;
 }
 
-main::-webkit-scrollbar-thumb{
-  background: #ff9d00;
+main::-webkit-scrollbar-thumb {
+  background: var(--colorYellow);
   border-radius: 5px;
 }
+
+/* MEDIA QUERIES */
 
 @media (min-width: 500px) {
   .container {
