@@ -2,6 +2,7 @@
   --colorPrincipal: #080f28;
   --colorSecundario: #080f28;
   --colorPrincialLight: #6b8cae;
+  --colorHover: #007aff;
 }
 
 body {
@@ -37,6 +38,7 @@ h1 {
 .header {
   grid-area: header;
   background-color: #141a32;
+  border-bottom: 1px solid #4f6b95;
 }
 
 .content {
@@ -52,6 +54,7 @@ h1 {
   grid-area: footer;
   padding: 10px !important;
   background-color: #141a32;
+  border-top: 1px solid #4f6b95;
 }
 
 .container {
@@ -150,11 +153,35 @@ footer .copy {
 }
 
 .redes-sociales i:hover {
-  color: var(--colorPrincial);
+  color: var(--colorHover);
 }
 
 article{
     padding-bottom: 20px;
+}
+
+
+/* LISTA */
+
+ul li {
+  margin: 25px 0;
+}
+
+ul li a:hover {
+  color: var(--colorHover);
+  margin-left: 20px;
+  transition: 0.4s;
+}
+
+/* SCROLL */
+
+main::-webkit-scrollbar{
+  width: 7px;
+}
+
+main::-webkit-scrollbar-thumb{
+  background: #ff9d00;
+  border-radius: 5px;
 }
 
 @media (min-width: 500px) {
