@@ -117,3 +117,12 @@ ul{
 		text-align: left;
 	}
 }
+
+.invalid {
+	border: solid 1px red;
+	box-shadow: 0 0 10px red;
+  }
+  .error {
+	color: red;
+	display: block;
+  }

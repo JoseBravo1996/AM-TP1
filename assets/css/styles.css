@@ -24,7 +24,7 @@ h1 {
 }
 
 .container > * {
-  padding: 20px;
+  padding: 0px 20px 0px 20px;
   overflow-y: auto;
   background-color: var(--colorPrincipal);
 }
@@ -202,15 +202,18 @@ main::-webkit-scrollbar-thumb {
 
 @media (min-width: 700px) {
   .container {
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-areas:
       "header header  header"
-      "navbar    content content"
-      "navbar    content content"
+      "navbar navbar navbar"
+      "content content content"
       "footer footer  footer";
   }
   nav ul {
-    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
   }
 }
+
+
