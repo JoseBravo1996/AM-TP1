@@ -38,19 +38,21 @@
                     <p>
                         <label>Sexo</label>
                         <select id="sexo" name="sexo">
+                            <option value="none" disabled selected>Selecciona tu sexo</option>
                             <option value="M">Masculino</option>
-                            <option value="F" selected>Femenino</option>
+                            <option value="F">Femenino</option>
                           </select>
                           <span></span>
                     </p>
                     <p>
                         <label>Grupo de Valoración</label>
                         <select id="gvaloracion" name="gvaloracion">
+                            <option value="none" disabled selected>Selecciona tu valoracion</option>
                             <option value="1">Lamentable</option>
-                            <option value="2" selected>Mala</option>
-                            <option value="3" selected>Podría ser mejor</option>
-                            <option value="4" selected>Cumple con mis expectativas</option>
-                            <option value="5" selected>Me encantó</option>
+                            <option value="2">Mala</option>
+                            <option value="3">Podría ser mejor</option>
+                            <option value="4">Cumple con mis expectativas</option>
+                            <option value="5">Me encantó</option>
                           </select>
                           <span></span>
                     </p>
@@ -64,8 +66,8 @@
                         <textarea rows="5" id="comentario"></textarea>
                     </p>
                     <p class='full'>
-                        <button id="reset">Restablecer valores</button>
-                        <button id="cancel">Cancelar</button>
+                        <button id="resetButtom">Restablecer valores</button>
+                        <button id="cancelButtom">Cancelar</button>
                         <button id="send" type="submit">Enviar</button>   
                     </p>
                 </form>

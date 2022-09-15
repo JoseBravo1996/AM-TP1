@@ -1,33 +1,53 @@
 var form = document.getElementById('form');
-var cancel = document.getElementById("cancel");
-var reset = document.getElementById("reset");
+var cancel = document.getElementById("cancelButtom");
+var reset = document.getElementById("resetButtom");
 var send = document.getElementById("send");
 
 reset.addEventListener("click", e => {
-  e.preventDefault();
-  form.reset();
+    e.preventDefault();
+    form.reset();
 });
 
-send.addEventListener("click", e => {
+cancel.addEventListener("click", e => {
   e.preventDefault();
-  var sexoID = document.getElementById("sexo");
-  var valoracionID = document.getElementById("gvaloracion");
+  userConfirm = confirm("Deseas volver al menu anterior?")
+  console.log(userConfirm);
+  if(userConfirm)  history.back();
+})
 
-  var nombre = document.getElementById('nombre').value;
-  var apellido = document.getElementById('apellido').value;
-  var fnacimiento = document.getElementById('fnacimiento').value;
-  var sexo = sexoID.options[sexoID.selectedIndex].text;
-  var gvaloracion = valoracionID.options[valoracionID.selectedIndex].text;
-  var email = document.getElementById('email').value;
-  var comentario = document.getElementById('comentario').value;
+const emptyField = (field) => field.trim().length === 0;
 
-  alert("Nombre : " + nombre +
-    "\n Apellido : " + apellido +
-    "\n F. Nacimiento : " + fnacimiento +
-    "\n Sexo : " + sexo +
-    "\n Valoración : " + gvaloracion +
-    "\n Email : " + email +
-    "\n Comentario : " + comentario);
+send.addEventListener("click", e => {
+    e.preventDefault();
+    sexoID = document.getElementById("sexo");
+    valoracionID = document.getElementById("gvaloracion");
+    fields = {
+      "nombre" : document.getElementById('nombre').value,
+      "apellido" : document.getElementById('apellido').value,
+      "fnacimiento" : document.getElementById('fnacimiento').value,
+      "sexo" : sexoID.options[sexoID.selectedIndex].text,
+      "gvaloracion" : valoracionID.options[valoracionID.selectedIndex].text,
+      "email" : document.getElementById('email').value,
+      "comentario" : document.getElementById('comentario').value,
+    };    
+
+    try {
+      Object.keys(fields).forEach(function (key){
+        if(emptyField(fields[key])) {
+          throw "break";
+        }
+      });
+      alert("Nombre : " + fields.nombre + 
+      "\n Apellido : " + fields.apellido +
+      "\n F. Nacimiento : " + fields.fnacimiento +
+      "\n Sexo : " + fields.sexo +
+      "\n Valoración : " + fields.gvaloracion +
+      "\n Email : " + fields.email +
+      "\n Comentario : " + fields.comentario);
+
+    } catch (e) {
+      alert("Debe completar todos los campos");
+    }
 });
 
 const nombre = document.querySelector("[name=nombre]");
@@ -52,11 +72,12 @@ const setErrors = (message, field, isError = true) => {
 const validateEmptyField = (message, e) => {
   const field = e.target;
   const fieldValue = e.target.value;
-  if (fieldValue.trim().length === 0) {
+  if (emptyField(fieldValue)) {
     setErrors(message, field);
   } else {
     setErrors("", field, false);
   }
+  return emptyField;
 }
 
 const validateEmailFormat = e => {
@@ -71,34 +92,21 @@ const validateEmailFormat = e => {
 }
 
 const validateStringFormat = e => {
-  const field = e.target;
-  const fieldValue = e.target.value;
-  const regex = new RegExp(/^[a-zA-Z]+$/);
-  if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
-    setErrors("Ingrese un formato valido", field);
-  } else {
-    setErrors("", field, false);
+    const field = e.target;
+    const fieldValue = e.target.value;
+    const regex = new RegExp(/^[a-zA-Z]+$/);
+    if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
+      setErrors("Ingrese un formato valido", field);
+    } else {
+      setErrors("", field, false);
+    }
   }
-}
-
-const validateDateFormat = e => {
-  const field = e.target;
-  const fieldValue = e.target.value;
-  const regex = new RegExp(/^[a-zA-Z]+$/);
-  if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
-    setErrors("Ingrese un formato valido", field);
-  } else {
-    setErrors("", field, false);
-  }
-}
 
 nombre.addEventListener("blur", (e) => validateEmptyField("El Nombre es requerido.", e));
 apellido.addEventListener("blur", (e) => validateEmptyField("El Apellido es requerido.", e));
 fnacimiento.addEventListener("blur", (e) => validateEmptyField("La Fecha de Nacimiento es requerido.", e));
-
-nombre.addEventListener("input", validateStringFormat);
-apellido.addEventListener("input", validateStringFormat);
-
 sexo.addEventListener("blur", (e) => validateEmptyField("El Sexo es requerido.", e));
 email.addEventListener("blur", (e) => validateEmptyField("El Email es requerido.", e));
+nombre.addEventListener("input", validateStringFormat);
+apellido.addEventListener("input", validateStringFormat);
 email.addEventListener("input", validateEmailFormat);
