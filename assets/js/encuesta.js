@@ -15,26 +15,39 @@ cancel.addEventListener("click", e => {
   if(userConfirm)  history.back();
 })
 
+const emptyField = (field) => field.trim().length === 0;
+
 send.addEventListener("click", e => {
     e.preventDefault();
-    var sexoID = document.getElementById("sexo"); 
-    var valoracionID = document.getElementById("gvaloracion"); 
+    sexoID = document.getElementById("sexo");
+    valoracionID = document.getElementById("gvaloracion");
+    fields = {
+      "nombre" : document.getElementById('nombre').value,
+      "apellido" : document.getElementById('apellido').value,
+      "fnacimiento" : document.getElementById('fnacimiento').value,
+      "sexo" : sexoID.options[sexoID.selectedIndex].text,
+      "gvaloracion" : valoracionID.options[valoracionID.selectedIndex].text,
+      "email" : document.getElementById('email').value,
+      "comentario" : document.getElementById('comentario').value,
+    };    
 
-    var nombre = document.getElementById('nombre').value;
-    var apellido = document.getElementById('apellido').value;
-    var fnacimiento = document.getElementById('fnacimiento').value;
-    var sexo = sexoID.options[sexoID.selectedIndex].text;
-    var gvaloracion = valoracionID.options[valoracionID.selectedIndex].text;
-    var email = document.getElementById('email').value;
-    var comentario = document.getElementById('comentario').value;
+    try {
+      Object.keys(fields).forEach(function (key){
+        if(emptyField(fields[key])) {
+          throw "break";
+        }
+      });
+      alert("Nombre : " + fields.nombre + 
+      "\n Apellido : " + fields.apellido +
+      "\n F. Nacimiento : " + fields.fnacimiento +
+      "\n Sexo : " + fields.sexo +
+      "\n Valoración : " + fields.gvaloracion +
+      "\n Email : " + fields.email +
+      "\n Comentario : " + fields.comentario);
 
-    alert("Nombre : " + nombre + 
-    "\n Apellido : " + apellido +
-    "\n F. Nacimiento : " + fnacimiento +
-    "\n Sexo : " + sexo +
-    "\n Valoración : " + gvaloracion +
-    "\n Email : " + email +
-    "\n Comentario : " + comentario);
+    } catch (e) {
+      alert("Debe completar todos los campos");
+    }
 });
 
 const nombre = document.querySelector("[name=nombre]");
@@ -59,11 +72,12 @@ const setErrors = (message, field, isError = true) => {
 const validateEmptyField = (message, e) => {
   const field = e.target;
   const fieldValue = e.target.value;
-  if (fieldValue.trim().length === 0) {
+  if (emptyField(fieldValue)) {
     setErrors(message, field);
   } else {
     setErrors("", field, false);
   }
+  return emptyField;
 }
 
 const validateEmailFormat = e => {
