@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CUERVANA 3</title>
     <link
     href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
     rel="stylesheet"
@@ -24,12 +24,10 @@
                     <p>
                         <label>Nombre</label>
                         <input type="text" id="nombre" name="nombre"></input>
-                        <span></span>
                     </p>
                     <p>
                         <label>Apellido</label>
                         <input type="text" id="apellido" name="apellido"></input>
-                        <span></span>
                     </p>
                     <p>
                         <label>Fecha de Nacimiento</label>
@@ -42,7 +40,6 @@
                             <option value="M">Masculino</option>
                             <option value="F">Femenino</option>
                           </select>
-                          <span></span>
                     </p>
                     <p>
                         <label>Grupo de Valoración</label>
@@ -54,12 +51,10 @@
                             <option value="4">Cumple con mis expectativas</option>
                             <option value="5">Me encantó</option>
                           </select>
-                          <span></span>
                     </p>
                     <p>
                         <label>Email</label>
                         <input type="email" id="email" name="email"></input>
-                        <span></span>
                     </p>
                     <p>
                         <label>Comentario</label>
@@ -67,10 +62,19 @@
                     </p>
                     <p class='full'>
                         <button id="resetButtom">Restablecer valores</button>
-                        <button id="cancelButtom">Cancelar</button>
+                        <button id="cancelButtom">Cancelar</button></a>
                         <button id="send" type="submit">Enviar</button>   
                     </p>
                 </form>
+            </div>
+            <div id="popup" class="overlay">
+                <div class="popup">
+                    <div class="content">
+                        Quieres cancelar?
+                    </div>
+                    <button class="buttom" id="cancelConfirm">Si, deseo volver al menu anterior</button>
+                    <button class="buttom" id="closeButtom">No, continuar con la encuesta</button>
+                </div>
             </div>
         </div>
         <script src="../js/encuesta.js"></script>

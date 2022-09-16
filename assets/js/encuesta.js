@@ -1,43 +1,54 @@
 var form = document.getElementById('form');
 var cancel = document.getElementById("cancelButtom");
+var closeButtom = document.getElementById("closeButtom");
+var cancelConfirm = document.getElementById("cancelConfirm");
 var reset = document.getElementById("resetButtom");
 var send = document.getElementById("send");
 
+
 reset.addEventListener("click", e => {
-    e.preventDefault();
-    form.reset();
+  e.preventDefault();
+  form.reset();
 });
 
 cancel.addEventListener("click", e => {
   e.preventDefault();
-  userConfirm = confirm("Deseas volver al menu anterior?")
-  console.log(userConfirm);
-  if(userConfirm)  history.back();
+  document.location.href = "#popup";
+})
+
+cancelConfirm.addEventListener("click", e => {
+  e.preventDefault();
+  window.location.href = "../../index.html";
+})
+
+closeButtom.addEventListener("click", e => {
+  e.preventDefault();
+  document.location.href = "#";
 })
 
 const emptyField = (field) => field.trim().length === 0;
 
 send.addEventListener("click", e => {
-    e.preventDefault();
-    sexoID = document.getElementById("sexo");
-    valoracionID = document.getElementById("gvaloracion");
-    fields = {
-      "nombre" : document.getElementById('nombre').value,
-      "apellido" : document.getElementById('apellido').value,
-      "fnacimiento" : document.getElementById('fnacimiento').value,
-      "sexo" : sexoID.options[sexoID.selectedIndex].text,
-      "gvaloracion" : valoracionID.options[valoracionID.selectedIndex].text,
-      "email" : document.getElementById('email').value,
-      "comentario" : document.getElementById('comentario').value,
-    };    
+  e.preventDefault();
+  sexoID = document.getElementById("sexo"); 
+  valoracionID = document.getElementById("gvaloracion");
+  fields = {
+    "nombre": document.getElementById('nombre').value,
+    "apellido": document.getElementById('apellido').value,
+    "fnacimiento": document.getElementById('fnacimiento').value,
+    "sexo": sexoID.value == "none" ? "" : sexoID.options[sexoID.selectedIndex].text,
+    "gvaloracion": valoracionID.value == "none" ? "" : valoracionID.options[valoracionID.selectedIndex].text,
+    "email": document.getElementById('email').value,
+    "comentario": document.getElementById('comentario').value,
+  };
 
-    try {
-      Object.keys(fields).forEach(function (key){
-        if(emptyField(fields[key])) {
-          throw "break";
-        }
-      });
-      alert("Nombre : " + fields.nombre + 
+  try {
+    Object.keys(fields).forEach(function (key) {
+      if (emptyField(fields[key])) {
+        throw "break";
+      }
+    });
+    alert(" Nombre : " + fields.nombre +
       "\n Apellido : " + fields.apellido +
       "\n F. Nacimiento : " + fields.fnacimiento +
       "\n Sexo : " + fields.sexo +
@@ -45,9 +56,9 @@ send.addEventListener("click", e => {
       "\n Email : " + fields.email +
       "\n Comentario : " + fields.comentario);
 
-    } catch (e) {
-      alert("Debe completar todos los campos");
-    }
+  } catch (e) {
+    alert("Debe completar todos los campos");
+  }
 });
 
 const nombre = document.querySelector("[name=nombre]");
@@ -57,56 +68,80 @@ const sexo = document.querySelector("[name=sexo]");
 const gvaloracion = document.querySelector("[name=gvaloracion]");
 const email = document.querySelector("[name=email]");
 
-const setErrors = (message, field, isError = true) => {
-  if (isError) {
-    field.classList.add("invalid");
-    field.nextElementSibling.classList.add("error");
-    field.nextElementSibling.innerText = message;
-  } else {
-    field.classList.remove("invalid");
-    field.nextElementSibling.classList.remove("error");
-    field.nextElementSibling.innerText = "";
-  }
+const activeError = (field) => {
+  return field.nextElementSibling.innerText == "";
 }
 
-const validateEmptyField = (message, e) => {
+const removeInvalid = (field) => {
+  if (field.nextElementSibling instanceof HTMLSpanElement) {
+    return;
+  }
+  field.classList.remove("invalid");
+}
+const setErrors = (message, field, isError, id) => {
+  if (!isError) {
+    document.getElementById(id)?.remove();
+  } else if (document.getElementById(id) == null) {
+    field.classList.add("invalid");
+    var span = document.createElement("span");
+    span.id = id;
+    span.classList.add("error");
+    span.innerText = message;
+    field.after(span)
+  } else {
+    document.getElementById(id).innerText = message;
+  }
+  removeInvalid(field);
+}
+
+const EmptyError = (show, field, fieldName) => {
+  show ? setErrors(fieldName + " es requerido.", field, true, "emptyError" + fieldName) : setErrors("", field, false, "emptyError" + fieldName);
+}
+
+const formatError = (show, field, fieldName) => {
+  show ? setErrors("Formato invalido", field, true, "formatError" + fieldName) : setErrors("", field, false, "formatError" + fieldName);
+}
+
+const validateEmptyField = (fieldName, e) => {
   const field = e.target;
   const fieldValue = e.target.value;
   if (emptyField(fieldValue)) {
-    setErrors(message, field);
+    EmptyError(true, field, fieldName)
   } else {
-    setErrors("", field, false);
+    EmptyError(false, field, fieldName);
   }
   return emptyField;
 }
 
-const validateEmailFormat = e => {
+const validateEmailFormat = (fieldName, e) => {
   const field = e.target;
   const fieldValue = e.target.value;
   const regex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
-    setErrors("Ingrese un mail valido", field);
+    formatError(true, field, fieldName);
   } else {
-    setErrors("", field, false);
+    formatError(false, field, fieldName);
   }
 }
 
-const validateStringFormat = e => {
-    const field = e.target;
-    const fieldValue = e.target.value;
-    const regex = new RegExp(/^[a-zA-Z]+$/);
-    if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
-      setErrors("Ingrese un formato valido", field);
-    } else {
-      setErrors("", field, false);
-    }
+const validateStringFormat = (fieldName, e) => {
+  const field = e.target;
+  const fieldValue = e.target.value;
+  const regex = new RegExp(/^[a-zA-Z]+$/);
+  if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
+    formatError(true, field, fieldName);
+  } else {
+    formatError(false, field, fieldName);
   }
+}
 
-nombre.addEventListener("blur", (e) => validateEmptyField("El Nombre es requerido.", e));
-apellido.addEventListener("blur", (e) => validateEmptyField("El Apellido es requerido.", e));
-fnacimiento.addEventListener("blur", (e) => validateEmptyField("La Fecha de Nacimiento es requerido.", e));
-sexo.addEventListener("blur", (e) => validateEmptyField("El Sexo es requerido.", e));
-email.addEventListener("blur", (e) => validateEmptyField("El Email es requerido.", e));
-nombre.addEventListener("input", validateStringFormat);
-apellido.addEventListener("input", validateStringFormat);
-email.addEventListener("input", validateEmailFormat);
+
+nombre.addEventListener("blur", (e) => validateEmptyField("Nombre", e));
+apellido.addEventListener("blur", (e) => validateEmptyField("Apellido", e));
+fnacimiento.addEventListener("blur", (e) => validateEmptyField("Fechadenacimiento", e));
+sexo.addEventListener("blur", (e) => validateEmptyField("Sexo", e));
+email.addEventListener("blur", (e) => validateEmptyField("Email", e));
+nombre.addEventListener("input", (e) => validateStringFormat("Nombre", e));
+apellido.addEventListener("input", (e) => validateStringFormat("Apellido", e));
+email.addEventListener("input", (e) => validateEmailFormat("Email", e));
+
