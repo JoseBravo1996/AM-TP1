@@ -12,16 +12,17 @@ reset.addEventListener("click", e => {
 
 cancel.addEventListener("click", e => {
   e.preventDefault();
-  document.location.href="#popup";
+  document.location.href = "#popup";
 })
 
 cancelConfirm.addEventListener("click", e => {
+  e.preventDefault();
   history.go(-2);
 })
 
 closeButtom.addEventListener("click", e => {
   e.preventDefault();
-  document.location.href="#";
+  document.location.href = "#";
 })
 
 const emptyField = (field) => field.trim().length === 0;
