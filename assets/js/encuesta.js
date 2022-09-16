@@ -47,7 +47,7 @@ send.addEventListener("click", e => {
         throw "break";
       }
     });
-    alert("Nombre : " + fields.nombre +
+    alert(" Nombre : " + fields.nombre +
       "\n Apellido : " + fields.apellido +
       "\n F. Nacimiento : " + fields.fnacimiento +
       "\n Sexo : " + fields.sexo +
