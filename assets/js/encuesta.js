@@ -5,6 +5,7 @@ var cancelConfirm = document.getElementById("cancelConfirm");
 var reset = document.getElementById("resetButtom");
 var send = document.getElementById("send");
 
+
 reset.addEventListener("click", e => {
   e.preventDefault();
   form.reset();
@@ -17,7 +18,7 @@ cancel.addEventListener("click", e => {
 
 cancelConfirm.addEventListener("click", e => {
   e.preventDefault();
-  history.go(-2);
+  window.location.href = "../../index.html";
 })
 
 closeButtom.addEventListener("click", e => {
