@@ -57,56 +57,82 @@ const sexo = document.querySelector("[name=sexo]");
 const gvaloracion = document.querySelector("[name=gvaloracion]");
 const email = document.querySelector("[name=email]");
 
-const setErrors = (message, field, isError = true) => {
-  if (isError) {
+const activeError = (field) => {
+  return field.nextElementSibling.innerText == "";
+}
+
+const removeInvalid = (field) => {
+  if(field.nextElementSibling instanceof HTMLSpanElement) {
+    return;
+  }
+  field.classList.remove("invalid");
+}
+const setErrors = (message, field, isError,id) => {
+  if(!isError) {
+    document.getElementById(id)?.remove();
+    removeInvalid(field);
+  } else if(document.getElementById(id)==null) {
     field.classList.add("invalid");
-    field.nextElementSibling.classList.add("error");
-    field.nextElementSibling.innerText = message;
+    var span = document.createElement("span");
+    span.id = id;
+    span.classList.add("error");
+    span.innerText = message;
+    field.after(span)
+    removeInvalid(field);
   } else {
-    field.classList.remove("invalid");
-    field.nextElementSibling.classList.remove("error");
-    field.nextElementSibling.innerText = "";
+    document.getElementById(id).innerText = message;
+    removeInvalid(field);
   }
 }
 
-const validateEmptyField = (message, e) => {
+const EmptyError = (show,field,fieldName) => {
+  show ? setErrors(fieldName + " es requerido.", field, true,"emptyError"+fieldName) : setErrors("",field,false,"emptyError"+fieldName);
+}
+
+const formatError = (show,field,fieldName) => {
+  show ? setErrors("Formato invalido", field, true,"formatError"+fieldName) : setErrors("",field,false,"formatError"+fieldName);
+}
+
+const validateEmptyField = (fieldName, e) => {
   const field = e.target;
   const fieldValue = e.target.value;
   if (emptyField(fieldValue)) {
-    setErrors(message, field);
+    EmptyError(true,field,fieldName)
   } else {
-    setErrors("", field, false);
+    EmptyError(false,field,fieldName);
   }
   return emptyField;
 }
 
-const validateEmailFormat = e => {
+const validateEmailFormat = (fieldName, e) => {
   const field = e.target;
   const fieldValue = e.target.value;
   const regex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
   if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
-    setErrors("Ingrese un mail valido", field);
+    formatError(true, field,fieldName);
   } else {
-    setErrors("", field, false);
+    formatError(false, field,fieldName);
   }
 }
 
-const validateStringFormat = e => {
+const validateStringFormat = (fieldName, e) => {
     const field = e.target;
     const fieldValue = e.target.value;
     const regex = new RegExp(/^[a-zA-Z]+$/);
     if (fieldValue.trim().length > 5 && !regex.test(fieldValue)) {
-      setErrors("Ingrese un formato valido", field);
+      formatError(true, field,fieldName);
     } else {
-      setErrors("", field, false);
+      formatError(false, field,fieldName);
     }
   }
 
-nombre.addEventListener("blur", (e) => validateEmptyField("El Nombre es requerido.", e));
-apellido.addEventListener("blur", (e) => validateEmptyField("El Apellido es requerido.", e));
-fnacimiento.addEventListener("blur", (e) => validateEmptyField("La Fecha de Nacimiento es requerido.", e));
-sexo.addEventListener("blur", (e) => validateEmptyField("El Sexo es requerido.", e));
-email.addEventListener("blur", (e) => validateEmptyField("El Email es requerido.", e));
-nombre.addEventListener("input", validateStringFormat);
-apellido.addEventListener("input", validateStringFormat);
-email.addEventListener("input", validateEmailFormat);
+
+nombre.addEventListener("blur", (e) => validateEmptyField("Nombre", e));
+apellido.addEventListener("blur", (e) => validateEmptyField("Apellido", e));
+fnacimiento.addEventListener("blur", (e) => validateEmptyField("Fechadenacimiento", e));
+sexo.addEventListener("blur", (e) => validateEmptyField("Sexo", e));
+email.addEventListener("blur", (e) => validateEmptyField("Email", e));
+nombre.addEventListener("input", (e) => validateStringFormat("Nombre",e));
+apellido.addEventListener("input", (e) => validateStringFormat("Apellido",e));
+email.addEventListener("input", (e) => validateEmailFormat("Email",e));
+
