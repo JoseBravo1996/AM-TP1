@@ -1,5 +1,7 @@
 var form = document.getElementById('form');
 var cancel = document.getElementById("cancelButtom");
+var closeButtom = document.getElementById("closeButtom");
+var cancelConfirm = document.getElementById("cancelConfirm");
 var reset = document.getElementById("resetButtom");
 var send = document.getElementById("send");
 
@@ -10,9 +12,16 @@ reset.addEventListener("click", e => {
 
 cancel.addEventListener("click", e => {
   e.preventDefault();
-  userConfirm = confirm("Deseas volver al menu anterior?")
-  console.log(userConfirm);
-  if (userConfirm) history.back();
+  document.location.href="#popup";
+})
+
+cancelConfirm.addEventListener("click", e => {
+  history.go(-2);
+})
+
+closeButtom.addEventListener("click", e => {
+  e.preventDefault();
+  document.location.href="#";
 })
 
 const emptyField = (field) => field.trim().length === 0;
