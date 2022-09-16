@@ -29,14 +29,14 @@ const emptyField = (field) => field.trim().length === 0;
 
 send.addEventListener("click", e => {
   e.preventDefault();
-  sexoID = document.getElementById("sexo");
+  sexoID = document.getElementById("sexo"); 
   valoracionID = document.getElementById("gvaloracion");
   fields = {
     "nombre": document.getElementById('nombre').value,
     "apellido": document.getElementById('apellido').value,
     "fnacimiento": document.getElementById('fnacimiento').value,
-    "sexo": sexoID.options[sexoID.selectedIndex].text,
-    "gvaloracion": valoracionID.options[valoracionID.selectedIndex].text,
+    "sexo": sexoID.value == "none" ? "" : sexoID.options[sexoID.selectedIndex].text,
+    "gvaloracion": valoracionID.value == "none" ? "" : valoracionID.options[valoracionID.selectedIndex].text,
     "email": document.getElementById('email').value,
     "comentario": document.getElementById('comentario').value,
   };
