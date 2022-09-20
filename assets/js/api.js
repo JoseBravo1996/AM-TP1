@@ -2,11 +2,8 @@ const API_URL = 'https://6329c0634c626ff832c95c63.mockapi.io/api/v1/movies';
 const MAIN = document.getElementById('content');
 const GENRES = ['accion', 'aventura', 'crimen', 'comedia', 'drama'];
 
-getData();
 
-function filterMovies(arr, data) {
-    arr = data.filter(x => x.genre == 'comedia');
-}
+//  getData();
 
 function showMovies(data) {
     MAIN.innerHTML = '';
@@ -90,3 +87,28 @@ function createElement(genre, movie) {
         </div>`
     article[0].appendChild(div);
 }
+
+$(document).ready(function () {
+    // $(".card").click(function () {
+    //     $(this).css({ "background": "#34495e"})
+    // });
+    // $(".card-header img").click(function () {
+    //     $(this).css({ "opacity": "0.5"})
+    // });
+
+    $(".card").click(function () {
+        $(this).css({ "background-color": "var(--colorHover)" });
+    });
+
+    $(".card img").click(function () {
+        $(this).css({ "opacity": "0.5" });
+    });
+
+    $(".card__link").click(function () {
+        $(this).text()
+        
+        $(this).css({ "opacity": "0.5" });
+    });
+
+
+});
