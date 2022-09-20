@@ -1,9 +1,10 @@
 const API_URL = 'https://6329c0634c626ff832c95c63.mockapi.io/api/v1/movies';
 const MAIN = document.getElementById('content');
 const GENRES = ['accion', 'aventura', 'crimen', 'comedia', 'drama'];
+var CARRITO = 0;
+document.getElementById("carrito").innerHTML = CARRITO;
 
-
-//  getData();
+getData();
 
 function showMovies(data) {
     MAIN.innerHTML = '';
@@ -63,6 +64,7 @@ function getData() {
         if (this.status == 200 && this.readyState == 4) {
             let datos = JSON.parse(this.responseText);
             showMovies(datos);
+            afterLoad();
         }
     }
 }
@@ -82,20 +84,13 @@ function createElement(genre, movie) {
             <div class="card__info">
               <div><i class="fa-solid fa-thumbs-up ${getColor(movie.vote_average)}"></i>${movie.vote_average}</div>
               <div>
-                <a href="./" class="card__link">Ver Pelicula</a>
+                <a class="card__link">$500</a>
               </div>
         </div>`
     article[0].appendChild(div);
 }
 
-$(document).ready(function () {
-    // $(".card").click(function () {
-    //     $(this).css({ "background": "#34495e"})
-    // });
-    // $(".card-header img").click(function () {
-    //     $(this).css({ "opacity": "0.5"})
-    // });
-
+function afterLoad(){
     $(".card").click(function () {
         $(this).css({ "background-color": "var(--colorHover)" });
     });
@@ -105,10 +100,8 @@ $(document).ready(function () {
     });
 
     $(".card__link").click(function () {
-        $(this).text()
-        
-        $(this).css({ "opacity": "0.5" });
+        CARRITO = CARRITO + parseInt($(this).text().split("$")[1]);
+        document.getElementById("carrito").innerHTML = CARRITO;
     });
 
-
-});
+}
